@@ -63,8 +63,7 @@ def valid(network, criterion, validloader):
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in validloader:
             X=X.cuda()
-            Y=
-            Y.cuda()
+            Y=Y.cuda()
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
