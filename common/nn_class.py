@@ -7,18 +7,18 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,512)
-        self.fc2 = nn.Linear(512,512)
-        self.fc3 = nn.Linear(512,512)
-        self.fc4 = nn.Linear(512,10)
+        self.fc1 = nn.Linear(21,64)
+        self.fc2 = nn.Linear(64,128)
+        self.fc3 = nn.Linear(128,64)
+        self.fc4 = nn.Linear(64,10)
 
 
         self.dropout = nn.Dropout(p=0.0)
 
     def forward(self, X):
-        X = torch.tanh(self.fc1(X))
-        X = torch.relu(self.fc2(X))
-        X = torch.relu(self.fc3(X))
+        X = torch.sigmoid(self.fc1(X))
+        X = torch.sigmoid(self.fc2(X))
+        X = torch.sigmoid(self.fc3(X))
 
         X = F.softmax(self.fc4(X), dim = 1)
 
@@ -84,8 +84,8 @@ def test(network, testloader):
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in testloader:
-            # X=X.cuda()
-            # Y=Y.cuda()
+            X=X.cuda()
+            Y=Y.cuda()
             out = network(X)
 
             predict = network(X)

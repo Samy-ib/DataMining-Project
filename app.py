@@ -24,7 +24,7 @@ def loadData(chemin, j): #Chemin = repertoire des datasets
 
 def train_CLASS():
 
-    BATCH = 100
+    BATCH = 32
     EPOCHS = 30
     LR = 0.01
 
