@@ -14,19 +14,19 @@ def runPrepro():
 
 def loadData(chemin, j): #Chemin = repertoire des datasets
     trainset = cl(chemin+'/train.csv', j)
-    trainloader = DataLoader(dataset=trainset, batch_size=1)
+    trainloader = DataLoader(dataset=trainset, batch_size=1, pin_memory=true)
     validset = cl(chemin+'/vali.csv', j)
-    validloader = DataLoader(dataset=validset, batch_size=1)
+    validloader = DataLoader(dataset=validset, batch_size=1, pin_memory=true)
     testset = cl(chemin+'/test.csv', j)
-    testloader = DataLoader(dataset=testset, batch_size=1)
+    testloader = DataLoader(dataset=testset, batch_size=1, pin_memory=true)
 
     return trainloader, validloader, testloader
 
 def train_CLASS():
 
-    BATCH = 32
-    EPOCHS = 30
-    LR = 0.01
+    BATCH = 100
+    EPOCHS = 100
+    LR = 0.005
 
     trainloader, validloader, testloader = loadData('data/CLASS', 21)
     network = nn_class.Net()

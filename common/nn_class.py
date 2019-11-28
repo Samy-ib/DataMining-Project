@@ -7,18 +7,18 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,64)
-        self.fc2 = nn.Linear(64,128)
-        self.fc3 = nn.Linear(128,64)
-        self.fc4 = nn.Linear(64,10)
+        self.fc1 = nn.Linear(21,32)
+        self.fc2 = nn.Linear(32,64)
+        self.fc3 = nn.Linear(64,32)
+        self.fc4 = nn.Linear(32,10)
 
 
-        self.dropout = nn.Dropout(p=0.0)
+        self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, X):
-        X = torch.sigmoid(self.fc1(X))
-        X = torch.sigmoid(self.fc2(X))
-        X = torch.sigmoid(self.fc3(X))
+        X = self.dropout(torch.sigmoid(self.fc1(X)))
+        X = self.dropout(torch.sigmoid(self.fc2(X)))
+        X = self.dropout(torch.sigmoid(self.fc3(X)))
 
         X = F.softmax(self.fc4(X), dim = 1)
 
@@ -97,7 +97,7 @@ def test(network, testloader):
         print (100*accuracy/(len(testloader)))
 
 def log(epochs, epoch, trainL, validL, accuracy):
-    print("Epoch: {}/{}.. ".format(epoch+1, epochs),
+    print("Epoch: {}/{}.. ".format(epoch, epochs-1),
         "Training Loss: {:.3f}.. ".format(trainL),
         "Validation Loss: {:.3f}.. ".format(validL),
         "Validation Accuracy: {:.3f}".format(accuracy))
