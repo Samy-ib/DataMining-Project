@@ -7,10 +7,10 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,40)
-        self.fc2 = nn.Linear(40,80)
-        self.fc3 = nn.Linear(80,40)
-        self.fc4 = nn.Linear(40,10)
+        self.fc1 = nn.Linear(21,512)
+        self.fc2 = nn.Linear(512,512)
+        self.fc3 = nn.Linear(512,512)
+        self.fc4 = nn.Linear(512,10)
 
 
         self.dropout = nn.Dropout(p=0.0)
@@ -63,7 +63,8 @@ def valid(network, criterion, validloader):
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in validloader:
             X=X.cuda()
-            Y=Y.cuda()
+            Y=
+            Y.cuda()
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
