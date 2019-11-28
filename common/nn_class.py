@@ -7,16 +7,20 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,512)
-        self.fc2 = nn.Linear(512,512)
-        self.fc3 = nn.Linear(512,10)
+        self.fc1 = nn.Linear(21,40)
+        self.fc2 = nn.Linear(40,80)
+        self.fc3 = nn.Linear(80,40)
+        self.fc4 = nn.Linear(40,10)
+
 
         self.dropout = nn.Dropout(p=0.0)
 
     def forward(self, X):
-        X = torch.relu(self.fc1(X))
+        X = torch.tanh(self.fc1(X))
         X = torch.relu(self.fc2(X))
-        X = F.softmax(self.fc3(X), dim = 1)
+        X = torch.relu(self.fc3(X))
+
+        X = F.softmax(self.fc4(X), dim = 1)
 
         return X
 
@@ -47,7 +51,7 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
 
         train_log.append(training_loss)
         valid_log.append(validation_loss)
-
+    test(network, testloader)
     show(train_log, valid_log)
     return network
 
@@ -71,10 +75,26 @@ def valid(network, criterion, validloader):
             # _, predict_y = torch.max(predict, 1)
 
             # accuracy = accuracy + (torch.sum(Y==predict_y).float())
-            # if indicePred==indice : accuracy += 1
+            if indicePred==indice : accuracy += 1
         
-        return validation_loss/len(validloader), 100*accuracy/(len(validloader)*len(Y))
+        return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
+def test(network, testloader):
+    accuracy = 0
+    with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
+        network.eval() #set the layers to evaluation mode(batchnorm and dropout)
+        for X, Y in testloader:
+            # X=X.cuda()
+            # Y=Y.cuda()
+            out = network(X)
+
+            predict = network(X)
+            valuePred, indicePred = predict[0].max(0) #get the value and indice of the predicted output (Highest probability)
+            _, indice = Y.max(1) #get the true indice so we could compare to the predicted one
+            
+            if indicePred==indice : accuracy += 1
+        
+        print (100*accuracy/(len(testloader)))
 
 def log(epochs, epoch, trainL, validL, accuracy):
     print("Epoch: {}/{}.. ".format(epoch+1, epochs),
@@ -84,9 +104,10 @@ def log(epochs, epoch, trainL, validL, accuracy):
 
 def show(trainL, validL):
     bestVali = min(validL)
-    bestEpoch = validL.index(min(validL)) + 1
+    bestEpoch = validL.index(min(validL)) 
     plt.plot(trainL, label='Training loss')
     plt.plot(validL, label='Validation Loss')
     plt.title('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
     plt.legend(frameon=False)
+    print('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
     plt.show()
