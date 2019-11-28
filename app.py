@@ -14,11 +14,11 @@ def runPrepro():
 
 def loadData(chemin, j): #Chemin = repertoire des datasets
     trainset = cl(chemin+'/train.csv', j)
-    trainloader = DataLoader(dataset=trainset, batch_size=1, pin_memory=True)
+    trainloader = DataLoader(dataset=trainset, batch_size=1, pin_memory=True,num_workers=4)
     validset = cl(chemin+'/vali.csv', j)
-    validloader = DataLoader(dataset=validset, batch_size=1, pin_memory=True)
+    validloader = DataLoader(dataset=validset, batch_size=1, pin_memory=True, num_workers=4)
     testset = cl(chemin+'/test.csv', j)
-    testloader = DataLoader(dataset=testset, batch_size=1, pin_memory=True)
+    testloader = DataLoader(dataset=testset, batch_size=1, pin_memory=True,num_workers=4)
 
     return trainloader, validloader, testloader
 
