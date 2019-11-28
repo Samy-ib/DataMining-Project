@@ -1,6 +1,8 @@
 import pandas as pd
 from pre_proc import corr
 
+from torch.utils.data import DataLoader
+
 # data = pd.read_csv('dataset.csv', sep='\t')
 
 # # print(data.head())
@@ -36,7 +38,8 @@ print(data.shape)
 
 # print(data['NSP'].value_counts())
 
-if 'lolsa' in data.columns:
-    print('YOUPI')
-else:
-    print('MEHH')
+from common.loader import CustomLoader as cl
+
+trainset = cl('data/CLASS/train.csv', 22)
+trainloader = DataLoader(dataset=trainset, batch_size=1)
+print(len(trainloader))

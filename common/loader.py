@@ -22,7 +22,7 @@ class CustomLoader(Dataset):
         y = data.iloc[:, j:] 
         self.len = x.shape[0]
         self.x_data = torch.tensor(x.values).float()
-        self.y_data = torch.tensor(y.values)
+        self.y_data = torch.tensor(y.values).float()
 
     def __getitem__(self, index):
         return self.x_data[index], self.y_data[index]

@@ -116,17 +116,6 @@ def run():
 
     postitive_corr(data_noenc) # Save in a txt file the positive corelations for each class
 
-    #corr.matrix(data_noenc.corr()['CLASS':'NSP']) # Show the correlation between the two classes and the attributes
-
-    # print(data.head())
-    # print(data_noenc.describe())
-    # print(data_noenc['ALTV'].value_counts())
-    # print(data_noenc['MLTV'].value_counts())
-    # print(data_noenc['DL'].value_counts())
-    # print(data_noenc['DS'].value_counts())
-    # print(data_noenc['DP'].value_counts())
-    # print(data_noenc['CLASS'].value_counts())
-    # print(data_noenc['NSP'].value_counts())
 
     del data['NSP']
     data_train, data_vali, data_test = split(data)
