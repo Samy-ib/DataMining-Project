@@ -7,9 +7,9 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,32)
-        self.fc2 = nn.Linear(32,32)
-        self.fc3 = nn.Linear(32,10)
+        self.fc1 = nn.Linear(21,512)
+        self.fc2 = nn.Linear(512,512)
+        self.fc3 = nn.Linear(512,10)
 
         self.dropout = nn.Dropout(p=0.0)
 
