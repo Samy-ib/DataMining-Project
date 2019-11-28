@@ -7,16 +7,16 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,5)
-        self.fc2 = nn.Linear(5,10)
-        # self.fc3 = nn.Linear(32,10)
+        self.fc1 = nn.Linear(21,32)
+        self.fc2 = nn.Linear(32,32)
+        self.fc3 = nn.Linear(32,10)
 
         self.dropout = nn.Dropout(p=0.0)
 
     def forward(self, X):
         X = torch.relu(self.fc1(X))
-        # X = F.tanh(self.fc2(X))
-        X = F.softmax(self.fc2(X), dim = 1)
+        X = torch.relu(self.fc2(X))
+        X = F.softmax(self.fc3(X), dim = 1)
 
         return X
 
