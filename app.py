@@ -37,7 +37,7 @@ def train_CLASS():
 def train_NSP():
     BATCH = 8
     EPOCHS = 300
-    LR = 0.003
+    LR = 0.0003
 
     trainloader, validloader, testloader = loadData('data/NSP', 21)
     network = nn_nsp.Net()
