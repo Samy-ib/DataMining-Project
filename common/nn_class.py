@@ -9,11 +9,11 @@ class Net(nn.Module):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(21,32)
         self.fc2 = nn.Linear(32,64)
-        self.fc3 = nn.Linear(64,32)
-        self.fc4 = nn.Linear(32,10)
+        self.fc3 = nn.Linear(64,128)
+        self.fc4 = nn.Linear(128,10)
 
 
-        self.dropout = nn.Dropout(p=0.3)
+        self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, X):
         X = self.dropout(torch.sigmoid(self.fc1(X)))
