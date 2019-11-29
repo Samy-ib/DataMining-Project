@@ -9,10 +9,10 @@ train_on_gpu = torch.cuda.is_available()
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,512)
-        self.fc2 = nn.Linear(512,512)
-        self.fc3 = nn.Linear(512,512)
-        self.fc4 = nn.Linear(512,3)
+        self.fc1 = nn.Linear(21,80)
+        self.fc2 = nn.Linear(80,160)
+        self.fc3 = nn.Linear(160,320)
+        self.fc4 = nn.Linear(320,3)
         # self.fc5 = nn.Linear(128,64)
         # self.fc6 = nn.Linear(64,10)
 
