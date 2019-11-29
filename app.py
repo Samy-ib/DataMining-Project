@@ -5,7 +5,7 @@ from pre_proc import prepro
 import numpy as np
 from common.loader import CustomLoader as cl
 from torch.utils.data import DataLoader
-from common import nn_class
+from common import nn_class, nn_nsp
 
 torch.manual_seed(1234)
 
@@ -24,7 +24,6 @@ def loadData(chemin, j): #Chemin = repertoire des datasets
     return trainloader, validloader, testloader
 
 def train_CLASS():
-
     BATCH = 1
     EPOCHS = 400
     LR = 0.003
@@ -33,11 +32,20 @@ def train_CLASS():
     network = nn_class.Net()
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(network.parameters(), lr=LR)
-    model = nn_class.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) #implemnter le test
+    model = nn_class.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) 
 
 def train_NSP():
-    pass
+    BATCH = 8
+    EPOCHS = 300
+    LR = 0.003
+
+    trainloader, validloader, testloader = loadData('data/NSP', 21)
+    network = nn_nsp.Net()
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.Adam(network.parameters(), lr=LR)
+    model = nn_nsp.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) 
 
 if __name__ == "__main__":
     # runPrepro()
-    train_CLASS()
+    # train_CLASS()
+    train_NSP()
