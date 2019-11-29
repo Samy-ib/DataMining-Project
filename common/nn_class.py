@@ -75,7 +75,7 @@ def valid(network, criterion, validloader):
         for X, Y in validloader:
             if train_on_gpu:
                 X=X.cuda()
-                Y=Y.cuda())
+                Y=Y.cuda()
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
