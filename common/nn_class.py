@@ -4,47 +4,48 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 
-# dtype = torch.FloatTensor
-dtype = torch.cuda.FloatTensor # Uncomment this to run on GPU
+train_on_gpu = torch.cuda.is_available()
 
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,64)
-        self.fc2 = nn.Linear(64,128)
-        self.fc3 = nn.Linear(128,256)
-        self.fc4 = nn.Linear(256,128)
-        self.fc5 = nn.Linear(128,64)
-        self.fc6 = nn.Linear(64,10)
+        self.fc1 = nn.Linear(21,32)
+        self.fc2 = nn.Linear(32,64)
+        self.fc3 = nn.Linear(64,32)
+        self.fc4 = nn.Linear(32,10)
+        # self.fc5 = nn.Linear(128,64)
+        # self.fc6 = nn.Linear(64,10)
 
 
 
 
-        self.dropout = nn.Dropout(p=0.5)
+        self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, X):
-        X = self.dropout(torch.sigmoid(self.fc1(X)))
-        X = self.dropout(torch.sigmoid(self.fc2(X)))
-        X = self.dropout(torch.sigmoid(self.fc3(X)))
-        X = self.dropout(torch.sigmoid(self.fc4(X)))
-        X = self.dropout(torch.sigmoid(self.fc5(X)))
+        X = self.dropout(F.relu(self.fc1(X)))
+        X = self.dropout(F.relu(self.fc2(X)))
+        X = self.dropout(F.relu(self.fc3(X)))
+        # X = self.dropout(torch.sigmoid(self.fc4(X)))
+        # X = self.dropout(torch.sigmoid(self.fc5(X)))
 
 
-        X = F.softmax(self.fc6(X), dim = 1)
+        X = F.softmax(self.fc4(X), dim = 1)
 
         return X
 
 
 def train(network, optimizer, criterion, trainloader, validloader, testloader, EPOCHS):
-    network.type(dtype)
+    if train_on_gpu :
+        network.cuda()
     train_log=[]
     valid_log=[]
     for epoch in range(EPOCHS):
         training_loss = 0
         network.train() #Set the network to training mode
         for X, Y in trainloader:
-            X=X.type(dtype)
-            Y=Y.type(dtype)
+            if train_on_gpu:
+                X=X.cuda()
+                Y=Y.cuda()
             optimizer.zero_grad()
             out = network(X)
             loss = criterion(out, Y)
@@ -72,8 +73,9 @@ def valid(network, criterion, validloader):
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in validloader:
-            X=X.type(dtype)
-            Y=Y.type(dtype)
+            if train_on_gpu:
+                X=X.cuda()
+                Y=Y.cuda())
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
@@ -94,8 +96,9 @@ def test(network, testloader):
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in testloader:
-            X=X.type(dtype)
-            Y=Y.type(dtype)
+            if train_on_gpu:
+                X=X.cuda()
+                Y=Y.cuda()
             out = network(X)
 
             predict = network(X)
@@ -108,8 +111,8 @@ def test(network, testloader):
 
 def log(epochs, epoch, trainL, validL, accuracy):
     print("Epoch: {}/{}.. ".format(epoch, epochs-1),
-        "Training Loss: {:.3f}.. ".format(trainL),
-        "Validation Loss: {:.3f}.. ".format(validL),
+        "Training Loss: {:.4f}.. ".format(trainL),
+        "Validation Loss: {:.4f}.. ".format(validL),
         "Validation Accuracy: {:.3f}".format(accuracy))
 
 def show(trainL, validL):
@@ -120,4 +123,6 @@ def show(trainL, validL):
     plt.title('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
     plt.legend(frameon=False)
     print('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
+    if train_on_gpu : %matplotlib inline
+    
     plt.show()
