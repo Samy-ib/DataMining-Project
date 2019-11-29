@@ -29,7 +29,7 @@ class Net(nn.Module):
         X = self.dropout(F.relu(self.fc5(X)))
 
 
-        X = F.softmax(self.fc4(X), dim = 1)
+        X = F.softmax(self.fc6(X), dim = 1)
 
         return X
 
