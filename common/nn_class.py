@@ -10,7 +10,7 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(21,256)
-        self.fc2 = nn.Linear(512,512)
+        self.fc2 = nn.Linear(256,512)
         self.fc3 = nn.Linear(512,256)
         self.fc4 = nn.Linear(256,10)
         # self.fc5 = nn.Linear(128,64)
