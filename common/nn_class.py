@@ -113,7 +113,7 @@ def log(epochs, epoch, trainL, validL, accuracy):
     print("Epoch: {}/{}.. ".format(epoch, epochs-1),
         "Training Loss: {:.4f}.. ".format(trainL),
         "Validation Loss: {:.4f}.. ".format(validL),
-        "Validation Accuracy: {:.3f}".format(accuracy))
+        "Validation Accuracy: {:.3f}%".format(accuracy))
 
 def show(trainL, validL):
     bestVali = min(validL)

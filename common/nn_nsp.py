@@ -19,12 +19,12 @@ class Net(nn.Module):
 
 
 
-        self.dropout = nn.Dropout(p=0.4)
+        self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, X):
-        X = self.dropout(F.relu(self.fc1(X)))
-        X = self.dropout(F.relu(self.fc2(X)))
-        X = self.dropout(F.relu(self.fc3(X)))
+        X = self.dropout(F.leaky_relu(self.fc1(X)))
+        X = self.dropout(F.leaky_relu(self.fc2(X)))
+        X = self.dropout(F.leaky_relu(self.fc3(X)))
         # X = self.dropout(torch.sigmoid(self.fc4(X)))
         # X = self.dropout(torch.sigmoid(self.fc5(X)))
 
@@ -113,7 +113,7 @@ def log(epochs, epoch, trainL, validL, accuracy):
     print("Epoch: {}/{}.. ".format(epoch, epochs-1),
         "Training Loss: {:.4f}.. ".format(trainL),
         "Validation Loss: {:.4f}.. ".format(validL),
-        "Validation Accuracy: {:.3f}".format(accuracy))
+        "Validation Accuracy: {:.3f}%".format(accuracy))
 
 def show(trainL, validL):
     bestVali = min(validL)

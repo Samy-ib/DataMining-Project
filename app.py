@@ -35,7 +35,7 @@ def train_CLASS():
     model = nn_class.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) 
 
 def train_NSP():
-    BATCH = 8
+    BATCH = 128
     EPOCHS = 300
     LR = 0.003
 
