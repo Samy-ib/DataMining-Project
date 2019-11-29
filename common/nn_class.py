@@ -123,6 +123,4 @@ def show(trainL, validL):
     plt.title('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
     plt.legend(frameon=False)
     print('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
-    if train_on_gpu : %matplotlib inline
-    
     plt.show()
