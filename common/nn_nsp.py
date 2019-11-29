@@ -9,22 +9,22 @@ train_on_gpu = torch.cuda.is_available()
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,16)
-        self.fc2 = nn.Linear(16,8)
-        self.fc3 = nn.Linear(8,4)
-        self.fc4 = nn.Linear(4,3)
+        self.fc1 = nn.Linear(21,512)
+        self.fc2 = nn.Linear(512,512)
+        self.fc3 = nn.Linear(512,512)
+        self.fc4 = nn.Linear(512,3)
         # self.fc5 = nn.Linear(128,64)
         # self.fc6 = nn.Linear(64,10)
 
 
 
 
-        self.dropout = nn.Dropout(p=0.3)
+        self.dropout = nn.Dropout(p=0)
 
     def forward(self, X):
-        X = self.dropout(F.leaky_relu(self.fc1(X)))
-        X = self.dropout(F.leaky_relu(self.fc2(X)))
-        X = self.dropout(F.leaky_relu(self.fc3(X)))
+        X = self.dropout(F.relu(self.fc1(X)))
+        X = self.dropout(F.relu(self.fc2(X)))
+        X = self.dropout(F.relu(self.fc3(X)))
         # X = self.dropout(torch.sigmoid(self.fc4(X)))
         # X = self.dropout(torch.sigmoid(self.fc5(X)))
 
