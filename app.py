@@ -26,7 +26,7 @@ def train_CLASS():
 
     BATCH = 64
     EPOCHS = 400
-    LR = 0.0005
+    LR = 0.001
 
     trainloader, validloader, testloader = loadData('data/CLASS', 21)
     network = nn_class.Net()
