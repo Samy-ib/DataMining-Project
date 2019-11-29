@@ -7,10 +7,14 @@ from torch.utils.data import DataLoader
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,32)
-        self.fc2 = nn.Linear(32,64)
-        self.fc3 = nn.Linear(64,128)
-        self.fc4 = nn.Linear(128,10)
+        self.fc1 = nn.Linear(21,64)
+        self.fc2 = nn.Linear(64,128)
+        self.fc3 = nn.Linear(128,256)
+        self.fc4 = nn.Linear(256,128)
+        self.fc5 = nn.Linear(128,64)
+        self.fc6 = nn.Linear(64,10)
+
+
 
 
         self.dropout = nn.Dropout(p=0.5)
@@ -19,8 +23,11 @@ class Net(nn.Module):
         X = self.dropout(torch.sigmoid(self.fc1(X)))
         X = self.dropout(torch.sigmoid(self.fc2(X)))
         X = self.dropout(torch.sigmoid(self.fc3(X)))
+        X = self.dropout(torch.sigmoid(self.fc4(X)))
+        X = self.dropout(torch.sigmoid(self.fc5(X)))
 
-        X = F.softmax(self.fc4(X), dim = 1)
+
+        X = F.softmax(self.fc6(X), dim = 1)
 
         return X
 
