@@ -1,0 +1,7 @@
+hidden,activation,dropout,BATCH,epochs,LR,criterion,optimizer,BVP,Validation,Testing
+32x64x32,sigmoid+softmax,0.3,1,100,0.005,MSE,adam,0.0299,79.62%,80.56%
+32x64x32,sigmoid+softmax,0.3,1,200,0.003,MSE,adam,0.027628,80.87,80.56
+32x64x32,sigmoid+softmax,0.3,1,364,0.003,MSE,adam,0.02484,83.386,81.81
+32x64x128,sigmoid+softmax,0.3,1,380,0.003,MSE,adam,0.02679,80.564,81.81
+32x64x128,sigmoid+softmax,0.3,1,352,0.003,MSE,adam,0.02698,82.132,
+32x64x32,relu+softmax,0,1,187,0.003,MSE,adam,0.02958,83.699,
