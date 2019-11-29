@@ -4,6 +4,9 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 
+# dtype = torch.FloatTensor
+dtype = torch.cuda.FloatTensor # Uncomment this to run on GPU
+
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -33,15 +36,15 @@ class Net(nn.Module):
 
 
 def train(network, optimizer, criterion, trainloader, validloader, testloader, EPOCHS):
-    network.cuda()
+    network.type(dtype)
     train_log=[]
     valid_log=[]
     for epoch in range(EPOCHS):
         training_loss = 0
         network.train() #Set the network to training mode
         for X, Y in trainloader:
-            X=X.cuda()
-            Y=Y.cuda()
+            X=X.type(dtype)
+            Y=Y.type(dtype)
             optimizer.zero_grad()
             out = network(X)
             loss = criterion(out, Y)
@@ -69,8 +72,8 @@ def valid(network, criterion, validloader):
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in validloader:
-            X=X.cuda()
-            Y=Y.cuda()
+            X=X.type(dtype)
+            Y=Y.type(dtype)
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
@@ -91,8 +94,8 @@ def test(network, testloader):
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
         for X, Y in testloader:
-            X=X.cuda()
-            Y=Y.cuda()
+            X=X.type(dtype)
+            Y=Y.type(dtype)
             out = network(X)
 
             predict = network(X)

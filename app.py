@@ -9,6 +9,7 @@ from common import nn_class
 
 torch.manual_seed(1234)
 
+
 def runPrepro():
     prepro.run()
 
