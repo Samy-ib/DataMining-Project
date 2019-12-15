@@ -25,10 +25,10 @@ def loadData(chemin, j): #Chemin = repertoire des datasets
 
 def train_CLASS():
     BATCH = 1
-    EPOCHS = 400
+    EPOCHS = 200
     LR = 0.003
 
-    trainloader, validloader, testloader = loadData('data/CLASS', 21)
+    trainloader, validloader, testloader = loadData('data/CLASS', 20)
     network = nn_class.Net()
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(network.parameters(), lr=LR)
@@ -36,10 +36,10 @@ def train_CLASS():
 
 def train_NSP():
     BATCH = 8
-    EPOCHS = 300
-    LR = 0.0003
+    EPOCHS = 400
+    LR = 0.0003 #retry with 0.0001 and 0.0005
 
-    trainloader, validloader, testloader = loadData('data/NSP', 21)
+    trainloader, validloader, testloader = loadData('data/NSP', 20)
     network = nn_nsp.Net()
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(network.parameters(), lr=LR)

@@ -1,1 +1,1 @@
-['LB', 'FM', 'ASTV', 'MSTV', 'ALTV', 'DL', 'DS', 'DP', 'Width', 'Max', 'Nmax', 'Nzeros', 'Variance', 'Tendency', 'NSP']
+['LB', 'FM', 'ASTV', 'MSTV', 'ALTV', 'DL', 'DS', 'DP', 'Width', 'Max', 'Nmax', 'Nzeros', 'Variance', 'NSP']

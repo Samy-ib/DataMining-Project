@@ -19,12 +19,12 @@ class Net(nn.Module):
 
 
 
-        self.dropout = nn.Dropout(p=0.11)
+        self.dropout = nn.Dropout(p=0.0)
 
     def forward(self, X):
-        X = self.dropout(F.relu(self.fc1(X)))
-        X = self.dropout(F.relu(self.fc2(X)))
-        X = self.dropout(F.relu(self.fc3(X)))
+        X = self.dropout(torch.sigmoid(self.fc1(X)))
+        X = self.dropout(torch.sigmoid(self.fc2(X)))
+        X = self.dropout(torch.sigmoid(self.fc3(X)))
         # X = self.dropout(torch.sigmoid(self.fc4(X)))
         # X = self.dropout(torch.sigmoid(self.fc5(X)))
 

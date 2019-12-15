@@ -16,8 +16,8 @@ def del_unnecessary(data): #data is the original csv
     '''
     
     data_noenc = data.copy()
-    data_noenc.drop(['LBE','b', 'e','DR','A','B','C','D','E','AD','DE','LD','FS','SUSP'], axis=1, inplace=True)
-    data.drop(['LBE','b', 'e', 'DR'], axis=1, inplace=True)
+    data_noenc.drop(['LBE','b', 'e','DR','Tendency','A','B','C','D','E','AD','DE','LD','FS','SUSP'], axis=1, inplace=True)
+    data.drop(['LBE','b', 'e', 'DR','Tendency'], axis=1, inplace=True)
     data.to_csv("data/data_enc.csv", sep=",", index=False)
     data_noenc.to_csv("data/data_noenc.csv", sep=",", index=False)
     return data,data_noenc
@@ -65,7 +65,7 @@ def normalise(data):
     data['Mean'] = (data['Mean'] - data['Mean'].min()) / (data['Mean'].max() - data['Mean'].min())
     data['Median'] = (data['Median'] - data['Median'].min()) / (data['Median'].max() - data['Median'].min())
     data['Variance'] = (data['Variance'] - data['Variance'].min()) / (data['Variance'].max() - data['Variance'].min())
-    data['Tendency'] = (data['Tendency'] - data['Tendency'].min()) / (data['Tendency'].max() - data['Tendency'].min())
+    # data['Tendency'] = (data['Tendency'] - data['Tendency'].min()) / (data['Tendency'].max() - data['Tendency'].min())
 
 
     # df["A"] = df["A"] / df["A"].max()
