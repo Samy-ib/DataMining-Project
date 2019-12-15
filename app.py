@@ -24,9 +24,9 @@ def loadData(chemin, j): #Chemin = repertoire des datasets
     return trainloader, validloader, testloader
 
 def train_CLASS():
-    BATCH = 1
-    EPOCHS = 200
-    LR = 0.003
+    BATCH = 8
+    EPOCHS = 400
+    LR = 0.0003
 
     trainloader, validloader, testloader = loadData('data/CLASS', 20)
     network = nn_class.Net()
@@ -47,5 +47,5 @@ def train_NSP():
 
 if __name__ == "__main__":
     # runPrepro()
-    # train_CLASS()
-    train_NSP()
+    train_CLASS()
+    # train_NSP()

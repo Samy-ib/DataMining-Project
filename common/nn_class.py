@@ -9,27 +9,27 @@ train_on_gpu = torch.cuda.is_available()
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(21,32)
-        self.fc2 = nn.Linear(32,64)
-        self.fc3 = nn.Linear(64,32)
-        self.fc4 = nn.Linear(32,10)
-        # self.fc5 = nn.Linear(128,64)
-        # self.fc6 = nn.Linear(64,10)
+        self.fc1 = nn.Linear(20,80)
+        self.fc2 = nn.Linear(80,160)
+        self.fc3 = nn.Linear(160,320)
+        self.fc4 = nn.Linear(320,160)
+        self.fc5 = nn.Linear(160,80)
+        self.fc6 = nn.Linear(80,10)
 
 
 
 
-        self.dropout = nn.Dropout(p=0.0)
+        self.dropout = nn.Dropout(p=0.25)
 
     def forward(self, X):
-        X = self.dropout(torch.sigmoid(self.fc1(X)))
-        X = self.dropout(torch.sigmoid(self.fc2(X)))
-        X = self.dropout(torch.sigmoid(self.fc3(X)))
-        # X = self.dropout(torch.sigmoid(self.fc4(X)))
-        # X = self.dropout(torch.sigmoid(self.fc5(X)))
+        X = self.dropout(F.gelu(self.fc1(X)))
+        X = self.dropout(F.gelu(self.fc2(X)))
+        X = self.dropout(F.gelu(self.fc3(X)))
+        X = self.dropout(F.gelu(self.fc4(X)))
+        X = self.dropout(F.gelu(self.fc5(X)))
 
 
-        X = F.softmax(self.fc4(X), dim = 1)
+        X = F.softmax(self.fc6(X), dim = 1)
 
         return X
 
