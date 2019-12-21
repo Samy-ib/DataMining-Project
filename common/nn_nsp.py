@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 
 train_on_gpu = torch.cuda.is_available()
-best_loss = 0.04
 
 class Net(nn.Module):
     def __init__(self):
@@ -40,6 +39,8 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
         network.cuda()
     train_log=[]
     valid_log=[]
+    best_loss = 0.04
+
     for epoch in range(EPOCHS):
         training_loss = 0
         network.train() #Set the network to training mode
