@@ -22,11 +22,11 @@ class Net(nn.Module):
         self.dropout = nn.Dropout(p=0.25)
 
     def forward(self, X):
-        X = self.dropout(F.elu(self.fc1(X)))
-        X = self.dropout(F.elu(self.fc2(X)))
-        X = self.dropout(F.elu(self.fc3(X)))
-        X = self.dropout(F.elu(self.fc4(X)))
-        X = self.dropout(F.elu(self.fc5(X)))
+        X = self.dropout(F.gelu(self.fc1(X)))
+        X = self.dropout(F.gelu(self.fc2(X)))
+        X = self.dropout(F.gelu(self.fc3(X)))
+        X = self.dropout(F.gelu(self.fc4(X)))
+        X = self.dropout(F.gelu(self.fc5(X)))
 
 
         X = F.softmax(self.fc6(X), dim = 1)
