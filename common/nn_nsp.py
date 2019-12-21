@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 
 train_on_gpu = torch.cuda.is_available()
-best_loss = 10
+best_loss = 0.04
 
 class Net(nn.Module):
     def __init__(self):
@@ -60,6 +60,7 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
 
         if validation_loss<best_loss:
             torch.save(network.state_dict(), 'models/nsp_model.pt')
+            best_loss=validation_loss
 
         log(EPOCHS, epoch, training_loss, validation_loss, accuracy)
         # last_loss = checkpoint(network, last_loss, validation_loss)
