@@ -59,7 +59,7 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
         validation_loss, accuracy = valid(network, criterion, validloader)
 
         if validation_loss<best_loss:
-            torch.save(network.state_dict(), './models/nsp_model.pt')
+            torch.save(network.state_dict(), 'models/nsp_model.pt')
 
         log(EPOCHS, epoch, training_loss, validation_loss, accuracy)
         # last_loss = checkpoint(network, last_loss, validation_loss)
