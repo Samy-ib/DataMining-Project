@@ -23,11 +23,11 @@ from torch.utils.data import DataLoader
 
 # data = pd.read_excel('data/CTG.xls', 'Raw data', skiprows=1)
 
-data = pd.read_csv('data/data.csv')
+# data = pd.read_csv('data/data.csv')
 
-print(data.head())
+# print(data.head())
 # corr.matrix(data.corr()['CLASS':'NSP'])
-print(data.shape)
+# print(data.shape)
 
 # from sklearn.model_selection import train_test_split
 # dataX=data.iloc[:,:-1]
@@ -38,8 +38,18 @@ print(data.shape)
 
 # print(data['NSP'].value_counts())
 
-from common.loader import CustomLoader as cl
+# from common.loader import CustomLoader as cl
 
-trainset = cl('data/CLASS/train.csv', 22)
-trainloader = DataLoader(dataset=trainset, batch_size=1)
-print(len(trainloader))
+# trainset = cl('data/CLASS/train.csv', 22)
+# trainloader = DataLoader(dataset=trainset, batch_size=1)
+# print(len(trainloader))
+
+
+from common.nn_nsp import predict
+
+# predict([120,0,0,0,73,0.5,])
+
+print('NSP 1')
+predict([137,1,0,0,20,2,0,0,5,0,0,74,86,160,1,0,126,128,130,23])
+print('NSP 2')
+predict([143,0,0,2,64,0.6,26,11.6,0,0,0,85,73,158,7,1,146,145,147,2])

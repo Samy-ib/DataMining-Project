@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
+from pre_proc.prepro import normaliseRow
 
 train_on_gpu = torch.cuda.is_available()
 
@@ -27,8 +28,34 @@ class Net(nn.Module):
         X = self.dropout(F.gelu(self.fc5(X)))
         X = self.dropout(F.gelu(self.fc6(X)))
 
-
         X = F.softmax(self.fc7(X), dim = 1)
+
+        return X
+
+class Net2(nn.Module):
+    def __init__(self):
+        super(Net2, self).__init__()
+        self.fc1 = nn.Linear(20,80)
+        self.fc2 = nn.Linear(80,160)
+        self.fc3 = nn.Linear(160,320)
+        self.fc4 = nn.Linear(320,160)
+        self.fc5 = nn.Linear(160,80)
+        self.fc6 = nn.Linear(80,3)
+
+
+
+
+        self.dropout = nn.Dropout(p=0.25)
+
+    def forward(self, X):
+        X = self.dropout(F.gelu(self.fc1(X)))
+        X = self.dropout(F.gelu(self.fc2(X)))
+        X = self.dropout(F.gelu(self.fc3(X)))
+        X = self.dropout(F.gelu(self.fc4(X)))
+        X = self.dropout(F.gelu(self.fc5(X)))
+
+
+        X = F.softmax(self.fc6(X), dim = 1)
 
         return X
 
@@ -59,7 +86,7 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
         validation_loss, accuracy = valid(network, criterion, validloader)
 
         if validation_loss<best_loss:
-            torch.save(network.state_dict(), 'models/nsp_model_epoch'+epoch+ '_loss' +"%.3f"%loss +'.pt')
+            torch.save(network.state_dict(), 'models/nsp_model_epoch'+str(epoch)+ '_loss' +"%.3f"%loss +'.pt')
             best_loss=validation_loss
 
         log(EPOCHS, epoch, training_loss, validation_loss, accuracy)
@@ -81,13 +108,14 @@ def valid(network, criterion, validloader):
             if train_on_gpu:
                 X=X.cuda()
                 Y=Y.cuda()
+            print(X)
             out = network(X)
             loss = criterion(out, Y)
             validation_loss += loss.item()
 
 
-            predict = network(X)
-            valuePred, indicePred = predict[0].max(0) #get the value and indice of the predicted output (Highest probability)
+            # predict = network(X)
+            valuePred, indicePred = out[0].max(0) #get the value and indice of the predicted output (Highest probability)
             _, indice = Y.max(1) #get the true indice so we could compare to the predicted one
             # _, predict_y = torch.max(predict, 1)
 
@@ -104,7 +132,7 @@ def test(network, testloader):
             if train_on_gpu:
                 X=X.cuda()
                 Y=Y.cuda()
-            out = network(X)
+            # out = network(X)
 
             predict = network(X)
             valuePred, indicePred = predict[0].max(0) #get the value and indice of the predicted output (Highest probability)
@@ -113,6 +141,26 @@ def test(network, testloader):
             if indicePred==indice : accuracy += 1
         
         print (100*accuracy/(len(testloader)))
+
+def predict(row):
+    """
+        Given the model and a list containing the attribute
+        we predict the NSP class.
+    """
+    row = normaliseRow(row)
+    row = torch.FloatTensor(row)
+    row = row.unsqueeze(0) #getting rid of "IndexError: Dimension out of range (expected to be in range of [-1, 0], but got 1)" due to missing batch dimension
+    network = loadNet('models/nsp_model.pt')
+    out = network(row)
+    # print(out[0].max[0])
+    print(out)
+    print(out[0].max(0)[1])
+
+def loadNet(path):
+    network = Net2()
+    network.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
+    return network
+
 
 def log(epochs, epoch, trainL, validL, accuracy):
     print("Epoch: {}/{}.. ".format(epoch, epochs-1),
@@ -129,3 +177,6 @@ def show(trainL, validL):
     plt.legend(frameon=False)
     print('Best validation perfomance is ' + str(bestVali) + ' at ' + str(bestEpoch))
     plt.show()
+
+
+    

@@ -72,6 +72,17 @@ def normalise(data):
 
     return data
 
+def normaliseRow(row):
+    """
+        Normalise one row only(for prediction)
+    """
+    df = pd.read_csv('data/data_noenc.csv')
+    columns_keys={i:col for i,col in enumerate(df.columns[:20])}
+    for i in range(len(row)):
+        row[i] = (row[i] - df[columns_keys[i]].min()) / (df[columns_keys[i]].max() - df[columns_keys[i]].min())
+    
+    return row
+
 def split(data):
     '''
         Split the data into 70% training 15% validation and 15% testing.
