@@ -35,9 +35,9 @@ def train_CLASS():
     model = nn_class.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) 
 
 def train_NSP():
-    BATCH = 16
+    BATCH = 8
     EPOCHS = 701
-    LR = 0.0001 #retry with 0.0001 and 0.0005
+    LR = 0.00005 #retry with 0.0001 and 0.0005
 
     trainloader, validloader, testloader = loadData('data/NSP', 20)
     network = nn_nsp.Net()
