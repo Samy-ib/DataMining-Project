@@ -9,15 +9,13 @@ train_on_gpu = torch.cuda.is_available()
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(20,80)
-        self.fc2 = nn.Linear(80,160)
-        self.fc3 = nn.Linear(160,320)
-        self.fc4 = nn.Linear(320,160)
-        self.fc5 = nn.Linear(160,80)
-        self.fc6 = nn.Linear(80,3)
-
-
-
+        self.fc1 = nn.Linear(20,320)
+        self.fc2 = nn.Linear(320,640)
+        self.fc3 = nn.Linear(640,800)
+        self.fc4 = nn.Linear(800,640)
+        self.fc5 = nn.Linear(640,320)
+        self.fc6 = nn.Linear(320,120)
+        self.fc7 = nn.Linear(120,3)
 
         self.dropout = nn.Dropout(p=0.25)
 
@@ -27,9 +25,10 @@ class Net(nn.Module):
         X = self.dropout(F.gelu(self.fc3(X)))
         X = self.dropout(F.gelu(self.fc4(X)))
         X = self.dropout(F.gelu(self.fc5(X)))
+        X = self.dropout(F.gelu(self.fc6(X)))
 
 
-        X = F.softmax(self.fc6(X), dim = 1)
+        X = F.softmax(self.fc7(X), dim = 1)
 
         return X
 
