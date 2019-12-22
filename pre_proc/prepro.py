@@ -79,15 +79,15 @@ def normaliseRow(row):
     # df = pd.read_csv('data/data_noenc.csv')
     # columns_keys={i:col for i,col in enumerate(df.columns[:20])}
     # maxMin=[]
-    # for col in df.columns:
+    # for col in df.columns: #del the last 2
     #     maxi=df[col].max()
     #     mini=df[col].min()
     #     maxMin.append([mini,maxi])
     columns_keys = {0: 'LB', 1: 'AC', 2: 'FM', 3: 'UC', 4: 'ASTV', 5: 'MSTV', 6: 'ALTV', 7: 'MLTV', 8: 'DL', 9: 'DS', 10: 'DP', 11: 'Width', 12: 'Min', 13: 'Max', 14: 'Nmax', 15: 'Nzeros', 16: 'Mode', 17: 'Mean', 18: 'Median', 19: 'Variance'}
-    maxMin=[[106, 160], [0, 26], [0, 564], [0, 23], [12, 87], [0.2, 7.0], [0, 91], [0.0, 50.7], [0, 16], [0, 1], [0, 4], [3, 180], [50, 159], [122, 238], [0, 18], [0, 10], [60, 187], [73, 182], [77, 186], [0, 269], [1, 10], [1, 3]]
+    maxMin=[[106, 160], [0, 26], [0, 564], [0, 23], [12, 87], [0.2, 7.0], [0, 91], [0.0, 50.7], [0, 16], [0, 1], [0, 4], [3, 180], [50, 159], [122, 238], [0, 18], [0, 10], [60, 187], [73, 182], [77, 186], [0, 269]]
     for i in range(len(row)):
-        row[i] = (row[i] - maxMin[i][0] / (maxMin[i][1] - maxMin[i][0]))
-    
+        row[i] = (row[i] - maxMin[i][0]) / (maxMin[i][1] - maxMin[i][0])
+
     return row
 
 def split(data):
