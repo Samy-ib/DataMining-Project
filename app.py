@@ -25,7 +25,7 @@ def loadData(chemin, j): #Chemin = repertoire des datasets
 
 def train_CLASS():
     BATCH = 8
-    EPOCHS = 400
+    EPOCHS = 601
     LR = 0.0003
 
     trainloader, validloader, testloader = loadData('data/CLASS', 20)
@@ -47,5 +47,5 @@ def train_NSP():
 
 if __name__ == "__main__":
     # runPrepro()
-    # train_CLASS()
-    train_NSP()
+    train_CLASS()
+    # train_NSP()
