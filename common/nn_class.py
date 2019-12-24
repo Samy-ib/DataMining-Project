@@ -45,8 +45,6 @@ class Net2(nn.Module):
         self.fc6 = nn.Linear(80,10)
 
 
-
-
         self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, X):
@@ -62,6 +60,7 @@ class Net2(nn.Module):
         return X
 
 def train(network, optimizer, criterion, trainloader, validloader, testloader, EPOCHS):
+    best_loss = 0.04
     if train_on_gpu :
         network.cuda()
     train_log=[]
@@ -83,6 +82,10 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
 
         training_loss /= len(trainloader) 
         validation_loss, accuracy = valid(network, criterion, validloader)
+
+        if validation_loss<best_loss:
+            torch.save(network.state_dict(), 'models/class_model_epoch'+str(epoch)+ '_loss' +"%.3f"%validation_loss +'.pt')
+            best_loss=validation_loss
 
         log(EPOCHS, epoch, training_loss, validation_loss, accuracy)
         # last_loss = checkpoint(network, last_loss, validation_loss)
