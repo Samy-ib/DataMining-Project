@@ -94,7 +94,6 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
 
         train_log.append(training_loss)
         valid_log.append(validation_loss)
-    test(network, testloader)
     show(train_log, valid_log)
     return network
 

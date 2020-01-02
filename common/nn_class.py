@@ -92,7 +92,6 @@ def train(network, optimizer, criterion, trainloader, validloader, testloader, E
 
         train_log.append(training_loss)
         valid_log.append(validation_loss)
-    test(network, testloader)
     show(train_log, valid_log)
     return network
 
@@ -111,17 +110,21 @@ def valid(network, criterion, validloader):
             validation_loss += loss.item()
 
 
-            predict = network(X)
-            valuePred, indicePred = predict[0].max(0) #get the value and indice of the predicted output (Highest probability)
+            valuePred, indicePred = out[0].max(0) #get the value and indice of the predicted output (Highest probability)
             _, indice = Y.max(1) #get the true indice so we could compare to the predicted one
             # _, predict_y = torch.max(predict, 1)
 
             # accuracy = accuracy + (torch.sum(Y==predict_y).float())
-            if indicePred==indice : accuracy += 1
-        
-        return validation_loss/len(validloader), 100*accuracy/(len(validloader))
+            # if indicePred==indice : accuracy += 1
+
+            predicted = out.argmax(dim=1)
+            corrects = (predicted == indice)
+            accuracy = corrects.sum().float() / float( indice.size(0) )
+        return validation_loss/len(validloader) , 100*accuracy
+        # return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
 def test(testloader):
+    network = loadNet('models/class_model.pt')
     accuracy = 0
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
