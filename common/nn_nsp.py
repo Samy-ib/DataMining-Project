@@ -18,7 +18,7 @@ class Net(nn.Module):
         self.fc6 = nn.Linear(320,120)
         self.fc7 = nn.Linear(120,3)
 
-        self.dropout = nn.Dropout(p=0.1)
+        self.dropout = nn.Dropout(p=0.35)
 
     def forward(self, X):
         X = self.dropout(F.gelu(self.fc1(X)))
