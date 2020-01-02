@@ -18,7 +18,7 @@ class Net(nn.Module):
         self.fc6 = nn.Linear(320,120)
         self.fc7 = nn.Linear(120,3)
 
-        self.dropout = nn.Dropout(p=0.25)
+        self.dropout = nn.Dropout(p=0.1)
 
     def forward(self, X):
         X = self.dropout(F.gelu(self.fc1(X)))
@@ -33,6 +33,9 @@ class Net(nn.Module):
         return X
 
 class Net2(nn.Module):
+    '''
+        This is the network used to load the saved model.
+    '''
     def __init__(self):
         super(Net2, self).__init__()
         self.fc1 = nn.Linear(20,80)

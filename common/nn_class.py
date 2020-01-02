@@ -35,6 +35,9 @@ class Net(nn.Module):
         return X
 
 class Net2(nn.Module):
+    '''
+        This is the network used to load the saved model.
+    '''
     def __init__(self):
         super(Net2, self).__init__()
         self.fc1 = nn.Linear(20,80)

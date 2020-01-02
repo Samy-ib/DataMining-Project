@@ -45,5 +45,5 @@ def train_NSP():
 
 if __name__ == "__main__":
     # runPrepro()
-    train_CLASS()
-    # train_NSP()
+    # train_CLASS()
+    train_NSP()
