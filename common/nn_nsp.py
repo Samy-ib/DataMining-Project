@@ -121,9 +121,14 @@ def valid(network, criterion, validloader):
             # _, predict_y = torch.max(predict, 1)
 
             # accuracy = accuracy + (torch.sum(Y==predict_y).float())
-            if indicePred==indice : accuracy += 1
+            # if indicePred==indice : accuracy += 1
+
+            predicted = out.argmax(dim=1)
+            corrects = (predicted == indice)
+            accuracy = corrects.sum().float() / float( indice.size(0) )
+        return validation_loss/len(validloader) , 100*accuracy
         
-        return validation_loss/len(validloader), 100*accuracy/(len(validloader))
+        # return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
 def test(testloader):
     network = loadNet('models/nsp_model.pt')
