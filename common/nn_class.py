@@ -122,8 +122,8 @@ def valid(network, criterion, validloader):
 
             predicted = out.argmax(dim=1)
             corrects = (predicted == indice)
-            accuracy = corrects.sum().float() / float( indice.size(0) )
-        return validation_loss/len(validloader) , 100*accuracy
+            accuracy = accuracy + (corrects.sum().float() / float( indice.size(0) ))
+        return validation_loss/len(validloader) , 100*(accuracy/len(validloader))
         # return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
 def test(testloader):
