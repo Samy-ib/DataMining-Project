@@ -48,7 +48,7 @@ class Net2(nn.Module):
 
 
 
-        self.dropout = nn.Dropout(p=0.0)
+        self.dropout = nn.Dropout(p=0.25)
 
     def forward(self, X):
         X = self.dropout(F.gelu(self.fc1(X)))

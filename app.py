@@ -34,7 +34,7 @@ def train_CLASS():
     model = nn_class.train(network,optimizer, criterion, trainloader, validloader, testloader, EPOCHS) 
 
 def train_NSP():
-    EPOCHS = 901
+    EPOCHS = 3000
     LR = 0.00003 #retry with 0.0001 and 0.0005
 
     trainloader, validloader, testloader = loadData('data/NSP', 20)
