@@ -45,15 +45,15 @@ from torch.utils.data import DataLoader
 # print(len(trainloader))
 
 
-from common.nn_nsp import predict
+from common.nn_class import predict
 
 # predict([120,0,0,0,73,0.5,])
 
-print('NSP 1')
-predict([137,1,0,0,20,2,0,0,5,0,0,74,86,160,1,0,126,128,130,23])
-print('NSP 2')
-predict([143,0,0,2,64,0.6,26,11.6,0,0,0,85,73,158,7,1,146,145,147,2])
-# df[columns_keys[i]]
+# print('NSP 1')
+# predict([137,1,0,0,20,2,0,0,5,0,0,74,86,160,1,0,126,128,130,23])
+# print('NSP 2')
+# predict([143,0,0,2,64,0.6,26,11.6,0,0,0,85,73,158,7,1,146,145,147,2])
+# # df[columns_keys[i]]
 
 # import pandas as pd
 
@@ -67,3 +67,21 @@ predict([143,0,0,2,64,0.6,26,11.6,0,0,0,85,73,158,7,1,146,145,147,2])
 #     maxMin.append([mini,maxi])
 
 # print(maxMin)
+
+# from common.nn_class import predict
+
+# print('CLASS 6')
+# predict([130,2,317,4,23,1.9,0,8.8,3,0,1,99,59,158,6,0,133,124,129,36])
+# print('CLASS 2')
+# predict([120,9,123,1,28,3.4,0,21.7,1,0,0,126,55,181,13,0,121,124,126,25])
+
+
+
+from common.loader import CustomLoader as cl
+from torch.utils.data import DataLoader
+from common import nn_nsp
+
+
+testset = cl('data/NSP'+'/test.csv', 20)
+testloader = DataLoader(dataset=testset, batch_size=1)
+nn_nsp.test(testloader)

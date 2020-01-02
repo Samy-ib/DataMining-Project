@@ -36,7 +36,7 @@ class Net(nn.Module):
 
 class Net2(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
+        super(Net2, self).__init__()
         self.fc1 = nn.Linear(20,80)
         self.fc2 = nn.Linear(80,160)
         self.fc3 = nn.Linear(160,320)
@@ -121,7 +121,7 @@ def valid(network, criterion, validloader):
         
         return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
-def test(network, testloader):
+def test(testloader):
     accuracy = 0
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
@@ -148,9 +148,11 @@ def predict(row):
     row = torch.FloatTensor(row)
     row = row.unsqueeze(0) #getting rid of "IndexError: Dimension out of range (expected to be in range of [-1, 0], but got 1)" due to missing batch dimension
     network = loadNet('models/class_model.pt')
+    network.eval()
     out = network(row)
     # print(out[0].max[0])
     print(out)
+    print(out[0].max())
     print(out[0].max(0)[1])
 
 def loadNet(path):

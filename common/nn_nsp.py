@@ -123,7 +123,8 @@ def valid(network, criterion, validloader):
         
         return validation_loss/len(validloader), 100*accuracy/(len(validloader))
 
-def test(network, testloader):
+def test(testloader):
+    network = loadNet('models/nsp_model.pt')
     accuracy = 0
     with torch.no_grad(): #Desactivate autograd engine (reduce memory usage and speed up computations)
         network.eval() #set the layers to evaluation mode(batchnorm and dropout)
@@ -150,6 +151,7 @@ def predict(row):
     row = torch.FloatTensor(row)
     row = row.unsqueeze(0) #getting rid of "IndexError: Dimension out of range (expected to be in range of [-1, 0], but got 1)" due to missing batch dimension
     network = loadNet('models/nsp_model.pt')
+    network.eval()
     out = network(row)
     # print(out[0].max[0])
     print(out)
